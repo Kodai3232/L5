@@ -1,0 +1,23 @@
+<h1>ショッピングカート</h1>
+
+<% if @cart_items.any? %>
+  <% total_price = 0 %>
+  <% @cart_items.each do |item| %>
+    <% subtotal = item.product.price * item.qty %>
+    <% total_price += subtotal %>
+    <div style="border-bottom: 1px solid #ccc; padding: 10px 0;">
+      <p><strong>商品名:</strong> <%= item.product.name %></p>
+      <p><strong>単価:</strong> <%= item.product.price %> 円</p>
+      <p><strong>数量:</strong> <%= item.qty %></p>
+      <p><strong>小計:</strong> <%= subtotal %> 円</p>
+      <p><%= button_to "カートから削除", cart_item_path(item), method: :delete %></p>
+    </div>
+  <% end %>
+
+  <h3>合計金額: <%= total_price %> 円</h3>
+<% else %>
+  <p>カートに商品は入っていません。</p>
+<% end %>
+
+<br>
+<%= link_to "商品一覧へ戻る", products_path %>
